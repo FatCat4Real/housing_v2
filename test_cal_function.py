@@ -7,6 +7,9 @@ def calculate_monthly_payment(
     minimum_monthly_payment: float = 0,
     additional_payment: float = 0
 ) -> dict:
+    
+    assert interest_rates_100 != [], "interest_rates_100 must not be empty"
+    assert all([i > 0 for i in interest_rates_100]), "All interest rates must be greater than 0"
 
     hist = {
         'loan_start':[], 
@@ -37,10 +40,25 @@ def calculate_monthly_payment(
         required_monthly_payment = (principal_left * interest_rate_monthly * nomi) / denomi
 
         for j in range(12):
-            total = max(required_monthly_payment, minimum_monthly_payment)
-            total += additional_payment
-
             interest = interest_rate_monthly * principal_left
+            
+            if required_monthly_payment >= principal_left:
+                # required_monthly_payment = principal_left
+                total = principal_left
+                minimum_monthly_payment = 0
+                additional_payment = 0
+            else:
+                if minimum_monthly_payment >= principal_left:
+                    total = principal_left
+                    minimum_monthly_payment = principal_left
+                    additional_payment = 0
+                else:
+                    total = max(required_monthly_payment, minimum_monthly_payment)
+                    if total + additional_payment >= principal_left:
+                        additional_payment = principal_left - total
+                    else:
+                        total += additional_payment
+
             principal = total - interest
             
             hist['loan_start'].append(principal_left)
@@ -50,7 +68,7 @@ def calculate_monthly_payment(
             hist['minimum_monthly_payment'].append(minimum_monthly_payment)
             hist['additional_payment'].append(additional_payment)
             
-            principal_left -= total - interest
+            principal_left -= principal
             
             hist['loan_end'].append(principal_left)
 
