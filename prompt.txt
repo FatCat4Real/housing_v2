@@ -1,0 +1,2 @@
+based on @test_cal_function.py, i want you to create a webapp using python's Gradio library.
+the app lets user adjusts different parameters of "calculate_monthly_payment" function to see mortgage details like interest_sum, total_sum, how many years, months of mortgate
