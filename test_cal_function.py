@@ -124,5 +124,3 @@ if __name__ == '__main__':
     months_left = (df.shape[0]) - (years_taken * 12)
     print(f'{years_taken}y {months_left}m')
     # df.to_csv('data.csv')
-
-   4300000.0 - 4289531.374132604
