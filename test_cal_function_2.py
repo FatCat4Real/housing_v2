@@ -106,4 +106,4 @@ if __name__ == '__main__':
     years_taken = int(df.shape[0] / 12)
     months_left = (df.shape[0]) - (years_taken * 12)
     print(f'{years_taken}y {months_left}m')
-    df.to_csv('data.csv')
+    df.to_csv('data_v2.csv')
